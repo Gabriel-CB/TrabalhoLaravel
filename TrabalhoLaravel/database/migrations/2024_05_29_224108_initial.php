@@ -13,7 +13,6 @@ class Initial extends Migration
      */
     public function up()
     {
-        Schema::createDatabase('trabalho_laravel');
 
         Schema::create('products', function (Blueprint $table) {
             $table->id();
