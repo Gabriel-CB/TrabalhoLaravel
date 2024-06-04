@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Models\Products;
-use \App\Models\Suppliers;
+use \App\Http\Controllers\SuppliersController;
+use \App\Http\Controllers\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,14 +19,14 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::controller(Products::class)->group(function () {
+Route::controller(ProductsController::class)->group(function () {
     Route::get('/products', 'index');
     Route::post('/products/add', 'add');
     Route::get('/products/edit/{id}', 'edit');
     Route::post('/products/update/{id}', 'update');
 });
 
-Route::controller(Suppliers::class)->group(function () {
+Route::controller(SuppliersController::class)->group(function () {
     Route::get('/suppliers', 'index');
     Route::post('/suppliers/add', 'add');
     Route::get('/suppliers/edit/{id}', 'edit');

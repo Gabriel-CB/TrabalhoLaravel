@@ -14,7 +14,9 @@ class SuppliersController extends Controller
      */
     public function index()
     {
-        //
+        return view('suppliers.index', [
+            'suppliers' => Suppliers::findMany([])
+        ]);
     }
 
     /**
@@ -22,31 +24,11 @@ class SuppliersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function add()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Suppliers  $suppliers
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Suppliers $suppliers)
-    {
-        //
+        return view('suppliers.add', [
+            'suppliers' => Suppliers::findMany([])
+        ]);
     }
 
     /**
@@ -57,7 +39,9 @@ class SuppliersController extends Controller
      */
     public function edit(Suppliers $suppliers)
     {
-        //
+        return view('suppliers.edit', [
+            'suppliers' => Suppliers::findMany([])
+        ]);
     }
 
     /**
@@ -69,7 +53,9 @@ class SuppliersController extends Controller
      */
     public function update(Request $request, Suppliers $suppliers)
     {
-        //
+//        return view('suppliers.index', [
+//            'suppliers' => Suppliers::findMany([])
+//        ]);
     }
 
     /**
@@ -80,6 +66,8 @@ class SuppliersController extends Controller
      */
     public function destroy(Suppliers $suppliers)
     {
-        //
+//        return view('suppliers.index', [
+//            'suppliers' => Suppliers::findMany([])
+//        ]);
     }
 }

@@ -14,7 +14,9 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
+        return view('products.index', [
+            'products' => Products::findMany([])
+        ]);
     }
 
     /**
@@ -22,31 +24,11 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function add()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Products  $products
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Products $products)
-    {
-        //
+        return view('products.add', [
+            //'user' => User::findOrFail($id)
+        ]);
     }
 
     /**
@@ -57,7 +39,9 @@ class ProductsController extends Controller
      */
     public function edit(Products $products)
     {
-        //
+        return view('products.edit', [
+            //'user' => User::findOrFail($id)
+        ]);
     }
 
     /**
@@ -69,7 +53,9 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Products $products)
     {
-        //
+//        return view('products.index', [
+//            //'user' => User::findOrFail($id)
+//        ]);
     }
 
     /**
@@ -78,8 +64,8 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Products $products)
+    public function delete(Products $products)
     {
-        //
+
     }
 }
