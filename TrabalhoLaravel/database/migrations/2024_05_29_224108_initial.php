@@ -13,26 +13,26 @@ class Initial extends Migration
      */
     public function up()
     {
-
-        Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->double('price');
-            $table->text('description');
-            $table->timestamps();
-        });
-
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('document');
             $table->string('document_type');
             $table->string('phone');
-            $table->foreignId('product_id')->constrained(
-                'products', 'id'
+            $table->timestamps();
+        });
+
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->double('price');
+            $table->text('description');
+            $table->foreignId('supplier_id')->constrained(
+                'suppliers', 'id'
             );
             $table->timestamps();
         });
+
     }
 
     /**
