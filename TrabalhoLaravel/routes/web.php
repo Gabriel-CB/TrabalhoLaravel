@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Models\Products;
+use \App\Models\Suppliers;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +16,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+Route::controller(Products::class)->group(function () {
+    Route::get('/products', 'index');
+    Route::post('/products/add', 'add');
+    Route::get('/products/edit/{id}', 'edit');
+    Route::post('/products/update/{id}', 'update');
+});
+
+Route::controller(Suppliers::class)->group(function () {
+    Route::get('/suppliers', 'index');
+    Route::post('/suppliers/add', 'add');
+    Route::get('/suppliers/edit/{id}', 'edit');
+    Route::post('/suppliers/update/{id}', 'update');
 });
