@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Suppliers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class SuppliersController extends Controller
 {
@@ -14,8 +16,19 @@ class SuppliersController extends Controller
      */
     public function index()
     {
+        $suppliers = DB::table('suppliers')
+            ->select([
+                'suppliers.id',
+                'suppliers.name',
+                'suppliers.document_type',
+                'suppliers.document',
+                'suppliers.phone'
+            ])
+            ->get()
+            ->all();
+
         return view('suppliers.index', [
-            'suppliers' => Suppliers::findMany([])
+            'suppliers' => $suppliers
         ]);
     }
 
@@ -26,42 +39,66 @@ class SuppliersController extends Controller
      */
     public function add()
     {
-        return view('suppliers.add', [
-            'suppliers' => Suppliers::findMany([])
-        ]);
+        return view('suppliers.add');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Suppliers  $suppliers
+     * @param \App\Models\Suppliers $suppliers
      * @return \Illuminate\Http\Response
      */
-    public function edit(Suppliers $suppliers)
+    public function edit($id)
     {
+
+        $supplier = DB::table('suppliers')
+            ->where('id', '=', $id)
+            ->select([
+                'suppliers.id',
+                'suppliers.name',
+                'suppliers.phone',
+                'suppliers.document',
+                'suppliers.document_type',
+            ])
+            ->get()
+            ->first();
+
         return view('suppliers.edit', [
-            'suppliers' => Suppliers::findMany([])
+            'supplier' => $supplier
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Suppliers  $suppliers
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Suppliers $suppliers
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Suppliers $suppliers)
     {
-//        return view('suppliers.index', [
-//            'suppliers' => Suppliers::findMany([])
-//        ]);
+        try {
+            if (!empty($request->request->get('id'))) {
+                $supplier = Suppliers::find($request->request->get('id'))->first();
+            } else {
+                $supplier = new Suppliers();
+            }
+            $supplier->name = $request->request->get('name');
+            $supplier->phone = $request->request->get('phone');
+            $supplier->document_type = $request->request->get('document_type');
+            $supplier->document = $request->request->get('document');
+            $supplier->save();
+            return redirect('suppliers');
+        } catch (\Exception $e) {
+
+            return Redirect::back()->withErrors($e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Suppliers  $suppliers
+     * @param \App\Models\Suppliers $suppliers
      * @return \Illuminate\Http\Response
      */
     public function destroy(Suppliers $suppliers)
