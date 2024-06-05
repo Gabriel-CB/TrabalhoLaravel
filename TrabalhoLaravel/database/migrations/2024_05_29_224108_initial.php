@@ -42,7 +42,7 @@ class Initial extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('suppliers');
         Schema::dropIfExists('products');
+        Schema::dropIfExists('suppliers');
     }
 }

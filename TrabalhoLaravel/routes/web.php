@@ -21,14 +21,14 @@ Route::get('/', function () {
 
 Route::controller(ProductsController::class)->group(function () {
     Route::get('/products', 'index');
-    Route::post('/products/add', 'add');
+    Route::get('/products/add', 'add');
     Route::get('/products/edit/{id}', 'edit');
-    Route::post('/products/update/{id}', 'update');
+    Route::post('/products/update', 'update');
 });
 
 Route::controller(SuppliersController::class)->group(function () {
     Route::get('/suppliers', 'index');
-    Route::post('/suppliers/add', 'add');
+    Route::get('/suppliers/add', 'add');
     Route::get('/suppliers/edit/{id}', 'edit');
-    Route::post('/suppliers/update/{id}', 'update');
+    Route::post('/suppliers/update', 'update');
 });

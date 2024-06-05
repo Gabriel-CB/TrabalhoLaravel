@@ -17,7 +17,9 @@
     <script src="/js/fontawesome-free-5.15.4-web/js/all.js"></script>
     <title>System</title>
 </head>
-
+@if($errors->any())
+    {!! implode('', $errors->all('<div class="error-message">:message<i class="fas fa-times"></i></div>')) !!}
+@endif
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Ramsey\Uuid\Type\Integer;
 
 class ProductsController extends Controller
 {
@@ -14,8 +17,19 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $products = DB::table('products')
+            ->crossJoin('suppliers')
+            ->select([
+                'products.id',
+                'products.name',
+                'products.price',
+                'suppliers.name as supplier_name',
+            ])
+            ->get()
+            ->all();
+
         return view('products.index', [
-            'products' => Products::findMany([])
+            'products' => $products
         ]);
     }
 
@@ -26,42 +40,85 @@ class ProductsController extends Controller
      */
     public function add()
     {
+        $suppliers = DB::table('suppliers')
+            ->select([
+                'suppliers.id',
+                'suppliers.name',
+            ])
+            ->get()
+            ->all();
+
         return view('products.add', [
-            //'user' => User::findOrFail($id)
+            'suppliers' => $suppliers
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Products  $products
+     * @param \App\Models\Products $products
      * @return \Illuminate\Http\Response
      */
-    public function edit(Products $products)
+    public function edit($id)
     {
+        $product = DB::table('products')
+            ->select([
+                'products.id',
+                'products.name',
+                'products.price',
+                'products.description',
+                'products.supplier_id'
+            ])
+            ->where('id', '=', $id)
+            ->get()
+            ->first();
+
+        $suppliers = DB::table('suppliers')
+            ->select([
+                'suppliers.id',
+                'suppliers.name',
+            ])
+            ->get()
+            ->all();
+
         return view('products.edit', [
-            //'user' => User::findOrFail($id)
+            'product' => $product,
+            'suppliers' => $suppliers
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Products  $products
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Products $products
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Products $products)
     {
-//        return view('products.index', [
-//            //'user' => User::findOrFail($id)
-//        ]);
+
+        try {
+            if(!empty($request->request->get('id'))){
+                $product = Products::find($request->request->get('id'))->first();
+            }else{
+                $product = new Products();
+            }
+            $product->name = $request->request->get('name');
+            $product->price = $request->request->get('price');
+            $product->description = $request->request->get('description');
+            $product->supplier_id = $request->request->get('supplier_id');
+            $product->save();
+            return redirect('products');
+        } catch (\Exception $e) {
+
+            return Redirect::back()->withErrors($e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Products  $products
+     * @param \App\Models\Products $products
      * @return \Illuminate\Http\Response
      */
     public function delete(Products $products)

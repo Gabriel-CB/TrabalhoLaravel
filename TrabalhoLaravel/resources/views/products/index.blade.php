@@ -2,12 +2,13 @@
 /**
  * @var \App\Models\Products[] $products
  */
+
 ?>
 
 @extends('layouts.main')
-@section('title', 'Listagem')
+@section('title', 'Products')
 @section('content')
-
+    <a href="/products/add" type="button" class="btn btn-success add-button">Add <i class="fas fa-plus"></i></a>
     <table class="table">
         <thead>
         <tr>
@@ -21,13 +22,14 @@
         <tbody>
         @foreach($products as $product)
             <tr>
-                <th scope="row">{{$product}}</th>
-                <td scope="row">{{$product}}</td>
-                <td scope="row">{{$product}}</td>
-                <td scope="row">{{$product}}</td>
+                <th scope="row">{{$product->id}}</th>
+                <td scope="row">{{$product->name}}</td>
+                <td scope="row">R$ {{$product->price}}</td>
+                <td scope="row">{{$product->supplier_name}}</td>
                 <td scope="row">
-                    <button type="button" class="btn btn-warning"><i class="fas fa-pen"></i></button>
-                    {{$product}}
+                    <a href="/products/edit/{{$product->id}}" type="button" class="btn btn-warning">
+                        <i class="fas fa-pen"></i>
+                    </a>
                 </td>
             </tr>
         @endforeach
