@@ -18,7 +18,7 @@
     <title>System</title>
 </head>
 @if($errors->any())
-    {!! implode('', $errors->all('<div class="error-message">:message<i class="fas fa-times"></i></div>')) !!}
+    {!! implode('', $errors->all('<div class="error-message">:message<i onclick="closeAlert(this)" class="fas fa-times" style="cursor: pointer;"></i></div>')) !!}
 @endif
 <body>
 
@@ -47,5 +47,11 @@
     @yield('content')
 </div>
 </body>
+<script>
+    function closeAlert(event){
+        event.parentElement.remove()
+    }
+</script>
 </html>
+
 

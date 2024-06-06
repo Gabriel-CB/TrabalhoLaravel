@@ -98,13 +98,17 @@ class SuppliersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Suppliers $suppliers
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Suppliers $suppliers)
+    public function delete($id)
     {
-//        return view('suppliers.index', [
-//            'suppliers' => Suppliers::findMany([])
-//        ]);
+        try {
+            DB::table('suppliers')->where('id', '=', $id)->delete();
+            return redirect('suppliers');
+        } catch (\Exception $e) {
+
+            return Redirect::back()->withErrors($e->getMessage());
+        }
     }
 }

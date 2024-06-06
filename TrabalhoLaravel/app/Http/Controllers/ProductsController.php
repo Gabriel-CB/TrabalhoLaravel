@@ -117,11 +117,18 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Products $products
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Products $products)
+    public function delete( $id)
     {
 
+        try {
+            DB::table('products')->where('id', '=', $id)->delete();
+            return redirect('products');
+        } catch (\Exception $e) {
+
+            return Redirect::back()->withErrors($e->getMessage());
+        }
     }
 }

@@ -24,6 +24,7 @@ Route::controller(ProductsController::class)->group(function () {
     Route::get('/products/add', 'add');
     Route::get('/products/edit/{id}', 'edit');
     Route::post('/products/update', 'update');
+    Route::get('/products/delete/{id}', 'delete');
 });
 
 Route::controller(SuppliersController::class)->group(function () {
@@ -31,4 +32,5 @@ Route::controller(SuppliersController::class)->group(function () {
     Route::get('/suppliers/add', 'add');
     Route::get('/suppliers/edit/{id}', 'edit');
     Route::post('/suppliers/update', 'update');
+    Route::get('/suppliers/delete/{id}', 'delete');
 });

@@ -30,9 +30,21 @@
                     <a href="/products/edit/{{$product->id}}" type="button" class="btn btn-warning">
                         <i class="fas fa-pen"></i>
                     </a>
+                    <button onclick='deleteItem({{$product->id}})'
+                            type="button" class="btn btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
 @endsection('content')
+
+<script>
+    function deleteItem(itemId){
+        if(confirm("you really want delete this row?")){
+            location.href=`/products/delete/${itemId}`
+        }
+    }
+</script>
