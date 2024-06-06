@@ -23,7 +23,7 @@
         </div>
         <div class="form-group">
             <label for="document">Document</label>
-            <input type="text"  required step="0.01" class="form-control" name="document"
+            <input type="text"  required class="form-control" name="document"
                    id="document" placeholder="document">
         </div>
         <div class="form-group">

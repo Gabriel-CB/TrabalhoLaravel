@@ -18,15 +18,14 @@ class ProductsController extends Controller
     public function index()
     {
         $products = DB::table('products')
-            ->crossJoin('suppliers')
+            ->join('suppliers', 'suppliers.id', '=', 'products.supplier_id')
             ->select([
                 'products.id',
                 'products.name',
                 'products.price',
                 'suppliers.name as supplier_name',
             ])
-            ->get()
-            ->all();
+            ->get();
 
         return view('products.index', [
             'products' => $products
@@ -99,7 +98,7 @@ class ProductsController extends Controller
 
         try {
             if(!empty($request->request->get('id'))){
-                $product = Products::find($request->request->get('id'))->first();
+                $product = Products::where('id',$request->request->get('id'))->first();
             }else{
                 $product = new Products();
             }

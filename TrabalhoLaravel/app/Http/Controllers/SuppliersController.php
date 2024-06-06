@@ -79,7 +79,7 @@ class SuppliersController extends Controller
     {
         try {
             if (!empty($request->request->get('id'))) {
-                $supplier = Suppliers::find($request->request->get('id'))->first();
+                $supplier = Suppliers::where('id',$request->request->get('id'))->first();
             } else {
                 $supplier = new Suppliers();
             }
